@@ -99,5 +99,39 @@ public class A6Tests {
 				fail("Should have returned both ROIOBservers");
 			}
 		}
+		public boolean isSameRegion(Region a, Region b) {
+			if (a.getTop() == b.getTop() &&
+					a.getLeft() == b.getLeft() &&
+					a.getRight() == b.getRight() &&
+					a.getBottom() == b.getBottom()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		@Test
+		public void checkForIntersection() {
+			try {
+				Region tempIntersect = one.intersect(two);
+				if (!isSameRegion(tempIntersect, intersectRegion)) {
+					fail("The intersect region should have been returned");
+				}
+				} catch (NoIntersectionException e) {
+					fail("There should have been an intersection");
+				}
+		}
+		
+		@Test
+		public void checkForUnion() {
+			Region unionRegionTemp = one.union(null);
+			if (!isSameRegion(unionRegionTemp, one)) {
+				fail("Did not return original region");
+			}
+			unionRegionTemp = one.union(two);
+			if (!isSameRegion(unionRegion, unionRegionTemp)) {
+				fail("Did not return the union of the regions");
+			}
+		}
 
 }
